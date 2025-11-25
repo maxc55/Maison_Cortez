@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>MC Parfums — Questionnaire sur-mesure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Polices -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    :root {
+      /* MODE NUIT (par défaut) */
+      --bg: #120f0e;
+      --bg-soft: #181211;
+      --card: rgba(255,255,255,0.04);
+      --border-soft: rgba(255,255,255,0.12);
+      --text: #f5f5f5;
+      --text-muted: #c0b8b3;
+      --accent: #d4af37;
+      --accent-soft: rgba(212,175,55,0.16);
+      --field-bg: rgba(0,0,0,0.55);
+      --placeholder: #8d837e;
+      --logo: url('Logo_White_No_Background.png');
+    }
+
+
+    /* ====== STYLE PERSONNALISÉ POUR CHECKBOXES & RADIOS ====== */
+
+    /* Style de base commun */
+    input[type="checkbox"],
+    input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    border-radius: 4px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    }
+
+    /* Boutons radio : arrondis */
+    input[type="radio"] {
+    border-radius: 999px;
+    }
+
+    /* État : survol */
+    input[type="checkbox"]:hover,
+    input[type="radio"]:hover {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    /* État : coché */
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    /* Petite coche pour les checkboxes */
+    input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    inset: 2px 4px 3px 4px;
+    border-right: 2px solid var(--bg-soft);
+    border-bottom: 2px solid var(--bg-soft);
+    transform: rotate(35deg);
+    }
+
+    /* Point central pour les radios */
+    input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: inherit;
+    background: var(--bg-soft);
+    }
+
+
+
+    body.light {
+      /* MODE JOUR */
+      --bg: #f7f5f3;
+      --bg-soft: #ffffff;
+      --card: rgba(0,0,0,0.03);
+      --border-soft: rgba(0,0,0,0.12);
+      --text: #171310;
+      --text-muted: #5c534e;
+      --accent: #b89425;
+      --accent-soft: rgba(184,148,37,0.12);
+      --field-bg: rgba(255,255,255,0.9);
+      --placeholder: #9b918a;
+      --logo: url('Logo_Black_No_Background.png');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2b221e 0, var(--bg) 40%, #050404 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ============ HEADER ============ */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.7);
+    }
+
+    body.light header {
+      background: rgba(247,245,243,0.86);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      background-image: var(--logo);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .brand-text-main {
+      font-family: "Playfair Display", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid transparent;
+      color: var(--text-muted);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #modeBtn {
+      margin-left: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    #modeBtn:hover {
+      background: var(--accent);
+      color: var(--bg-soft);
+      transform: translateY(-1px);
+    }
+
+    /* ============ MAIN WRAPPER ============ */
+
+    main {
+      flex: 1;
+    }
+
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3rem;
+    }
+
+    /* Intro card */
+
+    .intro-card {
+      background: radial-gradient(circle at top left, #30241b, var(--bg-soft));
+      border-radius: 26px;
+      padding: 2rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(0,0,0,0.7);
+      margin-bottom: 2rem;
+    }
+
+    body.light .intro-card {
+      background: #ffffff;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.12),
+        0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    .intro-title-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .intro-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .intro-subtitle {
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .intro-text p + p { margin-top: 0.4rem; }
+
+    .intro-note {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ============ FORM ============ */
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .form-section {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.6rem 1.5rem 1.8rem;
+      border: 1px solid var(--border-soft);
+      box-shadow:
+        0 12px 32px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    body.light .form-section {
+      background: var(--bg-soft);
+      box-shadow:
+        0 10px 26px rgba(0,0,0,0.07),
+        0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    .section-header {
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .fields-grid.full {
+      grid-template-columns: 1fr;
+    }
+
+    @media (max-width: 720px) {
+      .fields-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .required-star {
+      color: #e47070;
+      font-size: 0.85rem;
+    }
+
+    .form-help {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    textarea {
+      background: var(--field-bg);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 0.65rem 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    body.light input[type="text"],
+    body.light input[type="email"],
+    body.light input[type="date"],
+    body.light textarea {
+      border-color: rgba(0,0,0,0.12);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--placeholder);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft), 0 0 0 4px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
+    }
+
+    body.light input:focus,
+    body.light textarea:focus {
+      background: #ffffff;
+      box-shadow: 0 0 0 1px var(--accent-soft), 0 0 0 4px rgba(0,0,0,0.04);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    /* Radios & checkboxes */
+
+    .choice-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .choice-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.9rem;
+    }
+
+    .choice-option input {
+      accent-color: var(--accent);
+    }
+
+    /* Submit */
+
+    .submit-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.4rem;
+    }
+
+    .btn-submit {
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 1.7rem;
+      background: radial-gradient(circle at 20% 0, #f6e3a0, var(--accent) 40%, #8c6d2d);
+      color: #1b1410;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow:
+        0 16px 35px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(0,0,0,0.8);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow:
+        0 18px 42px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(0,0,0,0.9);
+    }
+
+    .submit-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 0.3rem;
+    }
+
+    /* Footer */
+
+    footer {
+      padding: 1.7rem 1.5rem 1.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    body.light footer {
+      border-top-color: rgba(0,0,0,0.08);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="header-inner">
+      <div class="brand-wrap">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="brand-text-main">MC Parfums</div>
+          <div class="brand-tagline">Questionnaire sur-mesure</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;">
+        <nav>
+          <a href="index.html">Accueil</a>
+          <a href="#top">Questionnaire</a>
+        </nav>
+        <button id="modeBtn" type="button">☀️ Jour</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main id="top">
+    <div class="page-wrap">
+
+      <!-- Intro -->
+      <section class="intro-card">
+        <div class="intro-title-eyebrow">Parfum sur mesure — particulier</div>
+        <h1 class="intro-title">Questionnaire de Parfum Sur-Mesure</h1>
+        <p class="intro-subtitle">
+          Bienvenue dans votre questionnaire de parfum sur mesure.
+        </p>
+        <div class="intro-text">
+          <p>
+            Ce formulaire m’aide à découvrir ce qui vous rend unique&nbsp;:
+            ce que vous ressentez, ce qui vous a marqué, et ce que vous souhaitez que votre parfum exprime.
+          </p>
+          <p>
+            Nous irons au-delà des simples préférences olfactives&nbsp;:
+            nous explorerons vos souvenirs, vos symboles, vos émotions, vos rituels
+            et même les textures qui vous définissent.
+          </p>
+          <p>
+            Si vous créez ce parfum pour quelqu’un d’autre (cadeau, proche, etc.),
+            merci de répondre aux questions en vous mettant <strong>à sa place</strong>
+            avec autant de détails que possible.
+          </p>
+        </div>
+        <p class="intro-note">
+          Les champs marqués d’une <span class="required-star">*</span> sont obligatoires.
+          L’enregistrement et l’envoi des réponses seront gérés plus tard via un système dédié.
+        </p>
+      </section>
+
+      <!-- Form -->
+      <form>
+
+        <!-- PROFIL DE BASE -->
+        <section class="form-section" aria-labelledby="profil-de-base">
+          <div class="section-header">
+            <h2 class="section-title" id="profil-de-base">Profil de base</h2>
+            <p class="section-description">
+              Pour mieux connaître votre peau, votre environnement et votre rythme de vie.
+              Ces éléments influencent directement la façon dont un parfum se développe sur vous.
+            </p>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Adresse e-mail <span class="required-star">*</span>
+              </label>
+              <input type="email" name="email" required placeholder="vous@example.com">
+            </div>
+          </div>
+
+          <div class="fields-grid">
+            <div class="form-field">
+              <label class="form-label">
+                Prénom + Nom <span class="required-star">*</span>
+              </label>
+              <input type="text" name="nom" required placeholder="Votre nom complet">
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Date de naissance <span class="required-star">*</span>
+              </label>
+              <input type="date" name="date_naissance" required>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Genre <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="genre" value="Homme" required> Homme
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="genre" value="Femme"> Femme
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="genre" value="Autre"> Autre
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Adresse de résidence actuelle <span class="required-star">*</span>
+              </label>
+              <input type="text" name="adresse" required placeholder="Ville, pays…">
+            </div>
+          </div>
+
+          <div class="fields-grid">
+            <div class="form-field">
+              <label class="form-label">
+                Origines culturelles et/ou géographiques <span class="required-star">*</span>
+              </label>
+              <input type="text" name="origines" required placeholder="Ex. Europe de l’Ouest, Afrique du Nord, Amérique Latine…">
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Profession <span class="required-star">*</span>
+              </label>
+              <input type="text" name="profession" required placeholder="Ce que vous faites au quotidien">
+            </div>
+          </div>
+        </section>
+
+        <!-- PEAU & ENVIRONNEMENT -->
+        <section class="form-section" aria-labelledby="peau-environnement">
+          <div class="section-header">
+            <h2 class="section-title" id="peau-environnement">Peau & environnement</h2>
+            <p class="section-description">
+              Les caractéristiques de votre peau et de votre environnement influencent la tenue et le rendu de votre parfum.
+            </p>
+          </div>
+
+          <div class="fields-grid">
+            <div class="form-field">
+              <label class="form-label">
+                Type de peau <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="checkbox" name="type_peau[]" value="Sèche"> Sèche
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="type_peau[]" value="Grasse"> Grasse
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="type_peau[]" value="Mixte"> Mixte
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="type_peau[]" value="Sensible"> Sensible
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="type_peau[]" value="Autre"> Autre
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Couleur de peau <span class="required-star">*</span>
+              </label>
+              <input type="text" name="couleur_peau" required placeholder="Comment décririez-vous votre carnation ?">
+            </div>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Quel est, selon vous, votre type de peau ? <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="ph_peau" value="acide" required>
+                  Peau plutôt sèche ou acide – (pH inférieur à 5,5)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="ph_peau" value="equilibree">
+                  Peau équilibrée / normale – (pH entre 5,5 et 6,2)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="ph_peau" value="grasse">
+                  Peau grasse ou alcaline – (pH supérieur à 6,2)
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- UNIVERS PERSONNEL -->
+        <section class="form-section" aria-labelledby="univers-personnel">
+          <div class="section-header">
+            <h2 class="section-title" id="univers-personnel">Univers personnel</h2>
+            <p class="section-description">
+              Quelques éléments sensoriels et émotionnels pour mieux saisir votre énergie et votre style.
+            </p>
+          </div>
+
+          <div class="fields-grid">
+            <div class="form-field">
+              <label class="form-label">
+                Saison préférée <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="saison" value="Printemps" required> Printemps
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="saison" value="Été"> Été
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="saison" value="Automne"> Automne
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="saison" value="Hiver"> Hiver
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Moment de la journée préféré <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="checkbox" name="moment[]" value="Matin"> Matin
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="moment[]" value="Après-midi"> Après-midi
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="moment[]" value="Soir"> Soir
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="moment[]" value="Nuit"> Nuit
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Quelques mots qui vous définissent
+              </label>
+              <textarea name="mots_definissent" placeholder="Quelques adjectifs, traits de caractère, énergies…"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Pays / ville de cœur <span class="required-star">*</span>
+              </label>
+              <input type="text" name="pays_coeur" required placeholder="Un lieu qui vous parle tout particulièrement">
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quel est le dernier parfum que vous avez porté ? <span class="required-star">*</span>
+              </label>
+              <input type="text" name="dernier_parfum" required placeholder="Nom du parfum, marque, etc.">
+            </div>
+          </div>
+        </section>
+
+        <!-- ANCRAGE ÉMOTIONNEL -->
+        <section class="form-section" aria-labelledby="ancrage-emotionnel">
+          <div class="section-header">
+            <h2 class="section-title" id="ancrage-emotionnel">Ancrage émotionnel</h2>
+            <p class="section-description">
+              Nous allons creuser dans vos souvenirs, votre vécu et vos symboles personnels pour capter les matières premières liées à votre histoire.
+              Ce sont ces détails intimes et émotionnels qui rendent un parfum vivant, sincère et unique.
+            </p>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Des odeurs d’enfance ou d’adolescence qui vous rappellent un bon souvenir ? <span class="required-star">*</span>
+              </label>
+              <textarea name="odeurs_enfance" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Y a-t-il une odeur liée à un souvenir heureux qui vous a marqué ?
+              </label>
+              <textarea name="odeur_souvenir_heureux"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Une odeur qui vous rappelle une personne chère ? <span class="required-star">*</span>
+              </label>
+              <textarea name="odeur_personne_chere" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Y a-t-il une plante, une fleur ou un ingrédient récurrent dans votre famille ou culture ? <span class="required-star">*</span>
+              </label>
+              <textarea name="ingredient_famille" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Une saison ou période de vie que vous souhaitez évoquer dans ce parfum ? <span class="required-star">*</span>
+              </label>
+              <textarea name="saison_a_evoquer" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quelle émotion aimeriez-vous ressentir en portant votre parfum ? 
+                <span class="form-help">(Ex : joie, confiance en soi, désir/séduction, apaisement…)</span>
+              </label>
+              <textarea name="emotion_souhaitee"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- INTENTION DU PARFUM -->
+        <section class="form-section" aria-labelledby="intention-parfum">
+          <div class="section-header">
+            <h2 class="section-title" id="intention-parfum">Intention du parfum</h2>
+            <p class="section-description">
+              Ici, vous définissez ce que vous souhaitez que le parfum exprime de vous.
+              Ce n’est pas seulement une question d’odeur, mais de présence, d’aura, d’impact.
+            </p>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Ce parfum est pour un usage… <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="usage_parfum" value="Quotidien" required> Quotidien
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="usage_parfum" value="Occasionnel"> Occasionnel
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="usage_parfum" value="Intime"> Intime
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="usage_parfum" value="Représentatif"> Représentatif
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Y a-t-il une occasion particulière qui vous pousse à créer ce parfum personnalisé ? <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Anniversaire"> Un anniversaire
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Cadeau"> Un cadeau pour quelqu’un de spécial
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Amour"> Une envie de séduire ou de célébrer l’amour
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Plaisir personnel"> Pour le plaisir personnel
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Passion curiosité"> Par passion ou curiosité
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Bien-être reconnexion"> Pour un moment de bien-être ou de reconnexion à soi
+                </label>
+                <label class="choice-option">
+                  <input type="checkbox" name="occasion[]" value="Autre"> Autre
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quelle aura souhaitez-vous projeter ? <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Confiante"> Confiante</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Sensuelle"> Sensuelle</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Mystique"> Mystique</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Artistique"> Artistique</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Élégante"> Élégante</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Naturelle"> Naturelle</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Rebelle"> Rebelle</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Discrète"> Discrète</label>
+                <label class="choice-option"><input type="checkbox" name="aura[]" value="Autre"> Autre</label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Aimeriez-vous que ce parfum évoque quelque chose de… <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Solaire" required>
+                  Solaire (chaleur, peau dorée, vacances)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Marin / Frais">
+                  Marin / Frais (air pur, eau, légèreté)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Froid">
+                  Froid (propre, net, minéral)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Boisé">
+                  Boisé (santal, cèdre, patchouli, vétiver, oud)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Aromatique / Fougère">
+                  Aromatique / Fougère (herbacé, lavande, naturel)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Florale">
+                  Florale (fleurs, douceur, élégance)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Oriental / Ambré">
+                  Oriental / ambré (épices, chaleur, sensualité)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Brut / Animal">
+                  Brut / Animal (cuir, musc, intensité)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Poudré / Musqué">
+                  Poudré / Musqué (doux, peau propre, délicat)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Fruité">
+                  Fruité (fruits frais ou sucrés)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="famille_olfactive" value="Gourmand">
+                  Gourmand (vanille, caramel, sucré, réconfortant)
+                </label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Y a-t-il une odeur, ou un type de parfum, que vous ne supportez pas ou que vous évitez ? <span class="required-star">*</span>
+              </label>
+              <p class="form-help">
+                Cela peut être une famille olfactive, une matière spécifique ou un souvenir désagréable.
+              </p>
+              <textarea name="odeurs_a_eviter" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quelle couleur associez-vous au parfum que vous imaginez ? <span class="required-star">*</span>
+              </label>
+              <textarea name="couleur_associee" required></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISUALISATION CRÉATIVE -->
+        <section class="form-section" aria-labelledby="visualisation-creative">
+          <div class="section-header">
+            <h2 class="section-title" id="visualisation-creative">Visualisation créative</h2>
+            <p class="section-description">
+              Une approche plus intuitive et presque artistique&nbsp;: imaginez votre parfum comme une image, un son, une matière ou un instant figé dans le temps.
+            </p>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Si votre parfum était un paysage, ce serait… <span class="required-star">*</span>
+              </label>
+              <textarea name="parfum_paysage" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Si c’était un morceau de musique, ce serait… <span class="required-star">*</span>
+              </label>
+              <textarea name="parfum_musique" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Si c’était un souvenir figé dans le temps, ce serait… <span class="required-star">*</span>
+              </label>
+              <textarea name="parfum_souvenir" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Trois mots que vous voulez que les autres ressentent en vous sentant : <span class="required-star">*</span>
+              </label>
+              <textarea name="trois_mots" required></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- DERNIERS SOUHAITS / PRÉCISIONS -->
+        <section class="form-section" aria-labelledby="derniers-souhaits">
+          <div class="section-header">
+            <h2 class="section-title" id="derniers-souhaits">Derniers souhaits ou précisions</h2>
+            <p class="section-description">
+              Section libre pour partager une idée précise, une envie symbolique ou une direction forte que vous aimeriez voir dans votre parfum.
+            </p>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <label class="form-label">
+                Avez-vous une idée précise du parfum que vous imaginez ? 
+                <span class="form-help">(Un mot, une ambiance, un accord, une sensation particulière, une direction…)</span>
+              </label>
+              <textarea name="idee_precise"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Y a-t-il une matière première ou une odeur que vous souhaitez absolument intégrer ?
+              </label>
+              <textarea name="matiere_premiere_souhaitee"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quel(s) parfum(s) avez-vous déjà porté ou aimé dans le passé ?
+              </label>
+              <textarea name="parfums_aimés"></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quel nom souhaitez-vous donner à votre parfum personnalisé ? <span class="required-star">*</span>
+              </label>
+              <p class="form-help">
+                Si vous n’avez pas de nom en tête, aucun souci&nbsp;: nous pourrons en proposer un qui corresponde à votre histoire.
+              </p>
+              <textarea name="nom_parfum" required></textarea>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Avez-vous quelque chose à ajouter, à partager, ou à préciser ? <span class="required-star">*</span>
+              </label>
+              <textarea name="commentaire_final" required></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- CHOIX DU FORMAT & PRIX -->
+        <section class="form-section" aria-labelledby="choix-format">
+          <div class="section-header">
+            <h2 class="section-title" id="choix-format">Choix du format et indication de prix</h2>
+          </div>
+
+          <div class="fields-grid full">
+            <div class="form-field">
+              <p class="section-description">
+                Les paiements s’effectuent uniquement en espèces lors de la remise en main propre.
+                La livraison est gratuite à Bruxelles.
+              </p>
+              <p class="section-description" style="margin-top:0.5rem;">
+                Pour les clients en Belgique mais en dehors de Bruxelles, des frais de livraison peuvent être demandés en fonction de la distance et du lieu de remise.
+              </p>
+              <p class="section-description" style="margin-top:0.5rem;">
+                Pour toute commande à destination de l’Europe ou en dehors, merci de me contacter par e-mail ou via Instagram
+                pour une estimation personnalisée des frais d’envoi et des modalités de paiement.
+              </p>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">
+                Quel format de parfum souhaitez-vous recevoir ? <span class="required-star">*</span>
+              </label>
+              <div class="choice-group">
+                <label class="choice-option">
+                  <input type="radio" name="format" value="100ml" required>
+                  100&nbsp;ml – 190€ (offre spéciale&nbsp;: un format voyage 10&nbsp;ml offert)
+                </label>
+                <label class="choice-option">
+                  <input type="radio" name="format" value="50ml">
+                  50&nbsp;ml – 110€
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRAITEMENT DE LA CRÉATION -->
+        <section class="form-section" aria-labelledby="traitement-creation">
+          <div class="section-header">
+            <h2 class="section-title" id="traitement-creation">Traitement de votre création olfactive</h2>
+          </div>
+          <div class="fields-grid full">
+            <div class="form-field">
+              <p class="section-description">
+                Une fois vos réponses reçues, je procède à leur analyse afin de comprendre au mieux vos attentes et préférences.
+              </p>
+              <p class="section-description" style="margin-top:0.4rem;">
+                Je travaille ensuite sur la conception de votre formule personnalisée, puis sur l’élaboration de votre parfum sur mesure.
+                La fragrance est laissée en macération pendant plusieurs semaines afin d’atteindre sa pleine maturité.
+              </p>
+              <p class="section-description" style="margin-top:0.4rem;">
+                En général, le processus complet dure environ un mois.
+                À son terme, vous recevez un e-mail détaillant l’histoire de la création ainsi que les informations nécessaires pour la réception de votre parfum.
+              </p>
+              <p class="section-description" style="margin-top:0.6rem;">
+                Pensez à vérifier régulièrement votre dossier “courriers indésirables / spams”.
+                Merci pour votre confiance et le soin que vous accordez à cette création unique.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SUBMIT (placeholder pour futur lien Google Forms / API) -->
+        <div class="submit-row">
+          <button type="button" class="btn-submit">
+            Enregistrer plus tard
+          </button>
+        </div>
+        <p class="submit-note">
+          Ce bouton est décoratif pour l’instant. L’enregistrement réel sera connecté plus tard à Google Forms ou à une API.
+        </p>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    © 2025 MC Parfums — Questionnaire sur mesure. Tous droits réservés.
+  </footer>
+
+  <script>
+    const modeBtn = document.getElementById("modeBtn");
+
+    modeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+
+      if (document.body.classList.contains("light")) {
+        modeBtn.textContent = "🌙 Nuit";
+      } else {
+        modeBtn.textContent = "☀️ Jour";
+      }
+    });
+  </script>
+
+</body>
+</html>
