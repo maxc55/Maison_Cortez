@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>MC Parfums — Parfums sur mesure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+html { scroll-behavior: smooth; }
+
+:root {
+  /* Mode Nuit (par défaut) */
+  --bg: #120f0e;
+  --card: rgba(255,255,255,0.05);
+  --text: #f2f2f2;
+  --text-muted: #c0b8b3;
+  --accent: #d4af37;
+  --logo: url('Logo_White_No_Background.png');
+}
+
+.light {
+  /* Mode Jour */
+  --bg: #ffffff;
+  --card: rgba(0,0,0,0.05);
+  --text: #1a1a1a;
+  --text-muted: #555;
+  --accent: #b89425;
+  --logo: url('Logo_Black_No_Background.png');
+}
+
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ---- HEADER ---- */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.3);
+}
+
+.light header {
+  background: rgba(255,255,255,0.6);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+/* Logo */
+.logo {
+  height: 62px;
+  width: 62px;
+  background-image: var(--logo);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Navigation */
+nav a {
+  margin-left: 1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.2rem;
+  transition: 0.2s;
+}
+nav a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Mode Switch Button */
+#modeBtn {
+  margin-left: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#modeBtn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ---- HERO ---- */
+
+.hero {
+  max-width: 1100px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+@media (max-width: 850px) {
+  .hero { grid-template-columns: 1fr; }
+}
+
+.hero-text-eyebrow {
+  color: var(--accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  font-family: "Playfair Display", serif;
+}
+
+.hero-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-story {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0.7rem 1.4rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  margin-right: 1rem;
+  transition: 0.2s;
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  padding: 0.7rem 1.2rem;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+.btn-secondary:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ---- SECTIONS ---- */
+
+section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+.section-box {
+  background: var(--card);
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.3s;
+}
+
+.light .section-box {
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.section-eyebrow {
+  color: var(--accent);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.7rem;
+  margin: 0.6rem 0 1rem;
+}
+
+.note-pill {
+  display: inline-block;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255,255,255,0.07);
+  border-radius: 20px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.light .note-pill {
+  background: rgba(0,0,0,0.07);
+}
+
+/* ---- FOOTER ---- */
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <!-- Gauche : logo cliquable -->
+    <div class="header-left">
+      <a href="index.html" class="header-link">
+        <div class="logo" aria-hidden="true"></div>
+      </a>
+    </div>
+
+    <!-- Centre : Maison Cortez cliquable -->
+    <div class="header-center">
+      <a href="index.html" class="header-link brand-name">
+        Maison Cortez
+      </a>
+    </div>
+
+    <!-- Droite : bouton mode -->
+    <div class="header-right">
+      <button id="modeBtn" type="button">☀️ Jour</button>
+    </div>
+
+  </div>
+</header>
+
+
+
+
+
+<!-- HERO -->
+<section class="hero" id="histoire">
+  <div>
+    <div class="hero-text-eyebrow">L'art du parfum</div>
+    <h1 class="hero-title">Un parfum qui n’existe que pour vous.</h1>
+
+    <p class="hero-subtitle">
+      J’ai créé MC Parfums pour raconter des histoires à travers des senteurs uniques.
+    </p>
+
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:center;">
+    <div class="logo" style="width:200px;height:200px;opacity:0.5;"></div>
+  </div>
+</section>
+
+<!-- SUR MESURE -->
+<section id="surmesure">
+  <div class="section-box">
+    <div class="section-eyebrow">Parfums sur mesure</div>
+    <h2 class="section-title">Votre parfum personnalisé</h2>
+
+    <p>
+      Grâce à un questionnaire précis, je construis un parfum totalement adapté à votre peau
+      et à votre personnalité.
+    </p>
+
+    <!-- Pastilles supprimées ici -->
+
+    <a href="forms.html" class="btn-secondary" style="margin-top:1.2rem;display:inline-block;">
+      Remplir le questionnaire
+    </a>
+  </div>
+</section>
+
+<!-- CARTE CADEAU -->
+<section id="cartecadeau">
+  <div class="section-box">
+    <div class="section-eyebrow">Carte cadeau</div>
+    <h2 class="section-title">Offrir une expérience olfactive</h2>
+
+    <p>
+      Vous souhaitez offrir plus qu’un simple parfum&nbsp;? La carte cadeau MC Parfums permet
+      à la personne de vivre sa propre création sur mesure&nbsp;: échange autour de ses envies,
+      questionnaire personnalisé et élaboration d’une fragrance unique, rien que pour elle.
+    </p>
+
+    <p style="margin-top:0.8rem;">
+      Idéale pour un anniversaire, un cadeau de couple, un mariage civil ou simplement pour
+      faire plaisir à quelqu’un qui compte.
+    </p>
+
+    <a href="giftcard.html" class="btn-secondary" style="margin-top:1.2rem;display:inline-block;">
+      Découvrir les cartes cadeau
+    </a>
+  </div>
+</section>
+
+<!-- ÉVÉNEMENTS -->
+<section id="evenements">
+  <div class="section-box">
+    <div class="section-eyebrow">Événements & Mariages</div>
+    <h2 class="section-title">Une expérience parfumée pour vos invités</h2>
+
+    <p>
+      Ateliers parfum, mini-flacons personnalisés, créations exclusives…
+      Donnez une identité olfactive unique à votre événement.
+    </p>
+
+    <a href="wedding.html"
+       class="btn-secondary"
+       style="margin-top:1.2rem;display:inline-block;">
+      Consultation privée – parfum de mariage
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/profile.php?id=61582519354960&mibextid=wwXIfr&rdid=sb3MgrSocv0ZsKba&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16Vw4sa9Ad%2F%3Fmibextid%3DwwXIfr#" class="footer-icon">
+      <img class="icon-facebook" src="facebook_noir.png" alt="Facebook">
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/maisoncortez.fragrance/" class="footer-icon">
+      <img class="icon-instagram" src="instagram_noir.png" alt="Instagram">
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:info.maisoncortez@gmail.com" class="footer-icon">
+      <img class="icon-mail" src="mail_noir.png" alt="Email">
+    </a>
+
+  </div>
+
+  <div class="footer-copy">
+    © Maison Cortez – Tous droits réservés
+  </div>
+</footer>
+
+
+<script>
+const modeBtn = document.getElementById("modeBtn");
+modeBtn.onclick = () => {
+  document.body.classList.toggle("light");
+
+  if (document.body.classList.contains("light")) {
+    modeBtn.textContent = "🌙 Nuit";
+  } else {
+    modeBtn.textContent = "☀️ Jour";
+  }
+};
+</script>
+
+</body>
+</html>

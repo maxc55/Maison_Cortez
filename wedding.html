@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>MC Parfums — Consultation Mariage sur Mesure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Polices -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    :root {
+      /* MODE NUIT (par défaut) */
+      --bg: #120f0e;
+      --bg-soft: #181211;
+      --card: rgba(255,255,255,0.04);
+      --border-soft: rgba(255,255,255,0.12);
+      --text: #f5f5f5;
+      --text-muted: #c0b8b3;
+      --accent: #d4af37;
+      --accent-soft: rgba(212,175,55,0.16);
+      --field-bg: rgba(0,0,0,0.55);
+      --placeholder: #8d837e;
+      --logo: url('Logo_White_No_Background.png');
+    }
+
+    body.light {
+      /* MODE JOUR */
+      --bg: #f7f5f3;
+      --bg-soft: #ffffff;
+      --card: rgba(0,0,0,0.03);
+      --border-soft: rgba(0,0,0,0.12);
+      --text: #171310;
+      --text-muted: #5c534e;
+      --accent: #b89425;
+      --accent-soft: rgba(184,148,37,0.12);
+      --field-bg: rgba(255,255,255,0.9);
+      --placeholder: #9b918a;
+      --logo: url('Logo_Black_No_Background.png');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2b221e 0, var(--bg) 45%, #050404 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.7);
+    }
+
+    body.light header {
+      background: rgba(247,245,243,0.86);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      background-image: var(--logo);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .brand-text-main {
+      font-family: "Playfair Display", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid transparent;
+      color: var(--text-muted);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #modeBtn {
+      margin-left: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    #modeBtn:hover {
+      background: var(--accent);
+      color: var(--bg-soft);
+      transform: translateY(-1px);
+    }
+
+    /* MAIN */
+
+    main { flex: 1; }
+
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3rem;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2.2rem;
+      margin-bottom: 2.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-label {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: 2.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-text p {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-note {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .hero-image-wrap {
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(0,0,0,0.8);
+      background: #000;
+      min-height: 260px;
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05);
+    }
+
+    body.light .hero-image-wrap {
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.15),
+        0 0 0 1px rgba(0,0,0,0.05);
+    }
+
+    /* SECTIONS */
+
+    .section-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .section-row { grid-template-columns: 1fr; }
+    }
+
+    .section-box {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.6rem 1.5rem 1.8rem;
+      border: 1px solid var(--border-soft);
+      box-shadow:
+        0 12px 32px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    body.light .section-box {
+      background: var(--bg-soft);
+      box-shadow:
+        0 10px 26px rgba(0,0,0,0.07),
+        0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-text p {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-text p strong { font-weight: 700; }
+
+    .bullet {
+      margin-right: 0.35rem;
+    }
+
+    .consult-options {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .consult-card {
+      padding: 0.85rem 0.9rem;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    body.light .consult-card {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    .consult-title {
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .consult-price {
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .consult-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .highlight-line {
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* CALENDRIER */
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .calendar-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .calendar-month {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .calendar-nav-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.15rem 0.3rem;
+      border-radius: 999px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .calendar-nav-btn:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .calendar-grid {
+      border-radius: 18px;
+      padding: 1rem 0.9rem 0.9rem;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    body.light .calendar-grid {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    .calendar-weekdays,
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.35rem;
+      font-size: 0.78rem;
+    }
+
+    .calendar-weekdays {
+      text-transform: lowercase;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .calendar-day {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      color: var(--text);
+      background: transparent;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    }
+
+    .calendar-day.empty {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .calendar-day:not(.empty):hover {
+      border-color: var(--accent);
+      background: rgba(0,0,0,0.3);
+      transform: translateY(-1px);
+    }
+
+    .calendar-day.selected {
+      background: var(--accent);
+      color: var(--bg-soft);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      transform: translateY(-1px);
+    }
+
+    .calendar-footer {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-reserver {
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 1.7rem;
+      background: #0c0c0c;
+      color: #f7f7f7;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow:
+        0 14px 30px rgba(0,0,0,0.9),
+        0 0 0 1px rgba(255,255,255,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn-reserver:hover {
+      background: #111;
+      transform: translateY(-1px);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.95),
+        0 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    body.light .btn-reserver {
+      background: #111;
+      color: #f5f5f5;
+      box-shadow:
+        0 14px 30px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(0,0,0,0.1);
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 1.7rem 1.5rem 1.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    body.light footer {
+      border-top-color: rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <!-- Gauche : logo cliquable -->
+    <div class="header-left">
+      <a href="index.html" class="header-link">
+        <div class="logo" aria-hidden="true"></div>
+      </a>
+    </div>
+
+    <!-- Centre : Maison Cortez cliquable -->
+    <div class="header-center">
+      <a href="index.html" class="header-link brand-name">
+        Maison Cortez
+      </a>
+    </div>
+
+    <!-- Droite : bouton mode -->
+    <div class="header-right">
+      <button id="modeBtn" type="button">☀️ Jour</button>
+    </div>
+
+  </div>
+</header>
+
+
+
+  <!-- MAIN -->
+  <main id="top">
+    <div class="page-wrap">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div>
+          <div class="hero-label">Parfum de mariage sur mesure</div>
+          <h1 class="hero-title">Consultation Privée — Parfum de Mariage</h1>
+          <div class="hero-price">À partir de 10&nbsp;€</div>
+
+          <div class="hero-text">
+            <p>
+              Chaque mariage est unique, tout comme la fragrance qui l’accompagne.
+              Avant de créer votre parfum sur mesure, une consultation est essentielle pour comprendre votre univers,
+              vos émotions et l’atmosphère que vous souhaitez immortaliser.
+            </p>
+            <p>
+              Ce rendez-vous nous permet d’échanger autour de votre projet olfactif&nbsp;:
+              vos envies, votre histoire, vos inspirations et la façon dont vous imaginez le parfum de votre jour d’exception.
+            </p>
+          </div>
+
+          <p class="hero-note">
+            Le montant de la consultation est déduit du prix de votre création finale si vous passez commande.
+          </p>
+        </div>
+
+        <div class="hero-image-wrap">
+          <!-- Remplace le nom du fichier si besoin -->
+          <img src="wedding-consultation.png" alt="Couple de mariés lors d'une consultation parfum sur mesure" />
+        </div>
+      </section>
+
+      <!-- SECTION CONSULTATION + CALENDRIER -->
+      <section class="section-row">
+
+        <!-- TEXTE CONSULTATION -->
+        <div class="section-box">
+          <h2 class="section-title">Formules de consultation</h2>
+          <div class="section-text">
+            <p>
+              Vous pouvez choisir la formule qui vous convient le mieux :
+            </p>
+          </div>
+
+          <div class="consult-options">
+            <div class="consult-card">
+              <div class="consult-title">💻 Consultation à distance (Facetime ou visio)</div>
+              <div class="consult-price">10&nbsp;€</div>
+              <p class="consult-text">
+                Une rencontre d’environ 30 à 45 minutes pour définir ensemble les bases de votre création.
+                À l’issue de cette consultation, vous recevrez le questionnaire personnalisé à compléter à votre rythme,
+                seul·e ou à deux.
+              </p>
+            </div>
+
+            <div class="consult-card">
+              <div class="consult-title">🏠 Consultation en personne (à domicile)</div>
+              <div class="consult-price">à partir de 50&nbsp;€</div>
+              <p class="consult-text">
+                Une expérience plus intime et immersive, directement chez vous (région de Bruxelles).
+                Nous prendrons le temps de découvrir votre univers, vos goûts et vos émotions autour de la création de votre parfum.
+                <br /><br />
+                <em>Un léger supplément peut s’appliquer selon la distance.</em>
+              </p>
+            </div>
+          </div>
+
+          <p class="highlight-line">
+            💌 Pour une demande spécifique (destination, grand nombre d’invités, etc.),
+            vous pouvez me contacter directement par e-mail&nbsp;: <strong>contact.maisoncortez@gmail.com</strong>.
+          </p>
+        </div>
+
+        <!-- CALENDRIER -->
+        <div class="section-box">
+          <div class="calendar-header">
+            <div class="calendar-title">Disponibilités</div>
+            <div class="calendar-month">
+              <button class="calendar-nav-btn" type="button" aria-label="Mois précédent">‹</button>
+              <span id="calendar-month-label">nov. 2025</span>
+              <button class="calendar-nav-btn" type="button" aria-label="Mois suivant">›</button>
+            </div>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-weekdays">
+              <span>dim.</span><span>lun.</span><span>mar.</span><span>mer.</span><span>jeu.</span><span>ven.</span><span>sam.</span>
+            </div>
+
+            <!-- Petit calendrier statique d'exemple -->
+            <div class="calendar-days" id="calendar-days">
+              <!-- Cases vides pour aligner le 1er du mois (ex : commence vendredi) -->
+              <button class="calendar-day empty" disabled></button>
+              <button class="calendar-day empty" disabled></button>
+              <button class="calendar-day empty" disabled></button>
+              <button class="calendar-day empty" disabled></button>
+              <button class="calendar-day">1</button>
+              <button class="calendar-day">2</button>
+              <button class="calendar-day">3</button>
+
+              <button class="calendar-day">4</button>
+              <button class="calendar-day">5</button>
+              <button class="calendar-day">6</button>
+              <button class="calendar-day">7</button>
+              <button class="calendar-day">8</button>
+              <button class="calendar-day">9</button>
+              <button class="calendar-day">10</button>
+
+              <button class="calendar-day">11</button>
+              <button class="calendar-day">12</button>
+              <button class="calendar-day">13</button>
+              <button class="calendar-day">14</button>
+              <button class="calendar-day">15</button>
+              <button class="calendar-day">16</button>
+              <button class="calendar-day">17</button>
+
+              <button class="calendar-day">18</button>
+              <button class="calendar-day">19</button>
+              <button class="calendar-day">20</button>
+              <button class="calendar-day">21</button>
+              <button class="calendar-day">22</button>
+              <button class="calendar-day">23</button>
+              <button class="calendar-day">24</button>
+
+              <button class="calendar-day">25</button>
+              <button class="calendar-day">26</button>
+              <button class="calendar-day">27</button>
+              <button class="calendar-day">28</button>
+              <button class="calendar-day">29</button>
+              <button class="calendar-day">30</button>
+              <button class="calendar-day empty" disabled></button>
+            </div>
+          </div>
+
+          <div class="calendar-footer">
+            <div>• Cliquez sur une date disponible pour la pré-sélectionner.</div>
+            <div>• La confirmation réelle du rendez-vous se fera ensuite par e-mail ou via l’API de réservation.</div>
+          </div>
+
+          <button class="btn-reserver" type="button">
+            Réserver avec moi
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/profile.php?id=61582519354960&mibextid=wwXIfr&rdid=sb3MgrSocv0ZsKba&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16Vw4sa9Ad%2F%3Fmibextid%3DwwXIfr#" class="footer-icon">
+      <img class="icon-facebook" src="facebook_noir.png" alt="Facebook">
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/maisoncortez.fragrance/" class="footer-icon">
+      <img class="icon-instagram" src="instagram_noir.png" alt="Instagram">
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:info.maisoncortez@gmail.com" class="footer-icon">
+      <img class="icon-mail" src="mail_noir.png" alt="Email">
+    </a>
+
+  </div>
+
+  <div class="footer-copy">
+    © Maison Cortez – Tous droits réservés
+  </div>
+</footer>
+
+
+  <script>
+    // Bouton jour / nuit
+    const modeBtn = document.getElementById("modeBtn");
+    modeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      modeBtn.textContent = document.body.classList.contains("light")
+        ? "🌙 Nuit"
+        : "☀️ Jour";
+    });
+
+    // Sélection de jour dans le calendrier (front-end uniquement)
+    const daysContainer = document.getElementById("calendar-days");
+    let selectedDay = null;
+
+    daysContainer.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!target.classList.contains("calendar-day") || target.classList.contains("empty")) {
+        return;
+      }
+      if (selectedDay) {
+        selectedDay.classList.remove("selected");
+      }
+      selectedDay = target;
+      selectedDay.classList.add("selected");
+
+      // Plus tard, tu pourras ici envoyer la date sélectionnée à une API / formulaire.
+      console.log("Date sélectionnée :", selectedDay.textContent);
+    });
+  </script>
+</body>
+</html>
