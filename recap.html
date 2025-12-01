@@ -5,30 +5,150 @@
   <title>Maison Cortez — Récapitulatif</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Polices & style général -->
+  <!-- Polices -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* Le récap utilise EXACTEMENT les styles de forms.html */
     html { scroll-behavior: smooth; }
 
-    .recap-card {
+    :root {
+      /* MODE NUIT (par défaut) */
+      --bg: #120f0e;
+      --bg-soft: #181211;
+      --card: rgba(255,255,255,0.04);
+      --border-soft: rgba(255,255,255,0.12);
+      --text: #f5f5f5;
+      --text-muted: #c0b8b3;
+      --accent: #d4af37;
+      --accent-soft: rgba(212,175,55,0.16);
+      --field-bg: rgba(0,0,0,0.55);
+      --placeholder: #8d837e;
+      --logo: url('Logo_White_No_Background.png');
+    }
+
+    body.light {
+      /* MODE JOUR */
+      --bg: #f7f5f3;
+      --bg-soft: #ffffff;
+      --card: rgba(0,0,0,0.03);
+      --border-soft: rgba(0,0,0,0.12);
+      --text: #171310;
+      --text-muted: #5c534e;
+      --accent: #b89425;
+      --accent-soft: rgba(184,148,37,0.12);
+      --field-bg: rgba(255,255,255,0.9);
+      --placeholder: #9b918a;
+      --logo: url('Logo_Black_No_Background.png');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2b221e 0, var(--bg) 40%, #050404 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ============ HEADER (identique aux autres pages) ============ */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.7);
+    }
+
+    body.light header {
+      background: rgba(247,245,243,0.86);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      background-image: var(--logo);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .header-link.brand-name {
+      font-family: "Playfair Display", serif;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 1rem;
+    }
+
+    #modeBtn {
+      margin-left: 0.8rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    #modeBtn:hover {
+      background: var(--accent);
+      color: var(--bg-soft);
+      transform: translateY(-1px);
+    }
+
+    /* ============ MAIN WRAPPER ============ */
+
+    main { flex: 1; }
+
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3rem;
+    }
+
+    /* ============ INTRO CARD (même style que forms.html) ============ */
+
+    .intro-card {
       background: radial-gradient(circle at top left, #30241b, var(--bg-soft));
-      border-radius: 26px;
-      padding: 2rem 1.6rem 2.4rem;
+      border-radius: 26px 26px 0 0;
+      padding: 2rem 1.6rem 2rem;
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow:
         0 18px 45px rgba(0,0,0,0.85),
         0 0 0 1px rgba(0,0,0,0.7);
-      margin-bottom: 2.5rem;
     }
 
-    body.light .recap-card {
+    body.light .intro-card {
       background: #ffffff;
       border-color: rgba(0,0,0,0.08);
       box-shadow:
-        0 14px 32px rgba(0,0,0,0.13),
+        0 12px 30px rgba(0,0,0,0.12),
         0 0 0 1px rgba(0,0,0,0.04);
     }
 
@@ -56,32 +176,95 @@
       color: var(--text);
     }
 
-    .recap-section-title {
-      margin-top: 1.8rem;
+    .intro-note {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ============ BLOC RÉCAP (style proche des form-section) ============ */
+
+    .recap-block {
+      background: var(--card);
+      border-radius: 0 0 26px 26px;
+      padding: 1.8rem 1.6rem 2.1rem;
+      border: 1px solid var(--border-soft);
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.95),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    body.light .recap-block {
+      background: var(--bg-soft);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.08),
+        0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    .section-header {
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title {
       font-family: "Playfair Display", serif;
-      font-size: 1.35rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .recap-group {
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    body.light .recap-group {
+      border-top-color: rgba(0,0,0,0.06);
+    }
+
+    .recap-group:first-of-type {
+      margin-top: 0.4rem;
+      padding-top: 0.4rem;
+      border-top: none;
+    }
+
+    .recap-group-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
       color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
-    .recap-row {
-      margin-top: 0.9rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    .fields-grid.full {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
     }
 
-    body.light .recap-row {
-      border-bottom-color: rgba(0,0,0,0.08);
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.9rem;
     }
 
     .recap-label {
-      font-weight: 700;
-      letter-spacing: 0.01em;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
 
     .recap-value {
-      margin-top: 0.25rem;
-      color: var(--text-muted);
+      font-size: 0.95rem;
+      color: var(--text);
       white-space: pre-wrap;
     }
 
@@ -95,35 +278,58 @@
       padding-bottom: 0.2rem;
     }
 
+    /* Footer (repris de forms.html) */
+
+    footer {
+      padding: 1.7rem 1.5rem 1.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    body.light footer {
+      border-top-color: rgba(0,0,0,0.08);
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER identique -->
+  <!-- ============ HEADER ============ -->
   <header>
     <div class="header-inner">
+
+      <!-- Gauche : logo cliquable -->
       <div class="header-left">
-        <a href="index.html" class="header-link"><div class="logo"></div></a>
+        <a href="index.html" class="header-link">
+          <div class="logo" aria-hidden="true"></div>
+        </a>
       </div>
 
+      <!-- Centre : Maison Cortez cliquable -->
       <div class="header-center">
-        <a href="index.html" class="header-link brand-name">Maison Cortez</a>
+        <a href="index.html" class="header-link brand-name">
+          Maison Cortez
+        </a>
       </div>
 
+      <!-- Droite : bouton mode -->
       <div class="header-right">
-        <button id="modeBtn">☀️ Jour</button>
+        <button id="modeBtn" type="button">☀️ Jour</button>
       </div>
+
     </div>
   </header>
 
 
 
+  <!-- ============ MAIN ============ -->
   <main id="top">
     <div class="page-wrap">
 
-      <!-- INTRO / RÉCAP -->
-      <section class="recap-card">
+      <!-- Carte d’intro (comme sur forms.html) -->
+      <section class="intro-card">
         <div class="recap-title-eyebrow">Récapitulatif du questionnaire</div>
         <h1 class="recap-title">Merci pour votre confiance</h1>
         <p class="recap-subtitle">
@@ -135,9 +341,20 @@
             Elles serviront à créer votre parfum personnalisé avec la plus grande précision.
           </p>
         </div>
+        <p id="recap-date" class="intro-note"></p>
+      </section>
 
-        <!-- Conteneur du contenu dynamique -->
-        <div id="recap-container" style="margin-top:1.6rem;"></div>
+      <!-- Bloc récap stylé comme une grande section de formulaire -->
+      <section class="recap-block">
+        <div class="section-header">
+          <h2 class="section-title">Vos informations</h2>
+          <p class="section-description">
+            Si vous remarquez une erreur ou souhaitez compléter certains éléments,
+            vous pouvez toujours me contacter par e-mail ou via Instagram.
+          </p>
+        </div>
+
+        <div id="recap-container"></div>
 
         <a href="index.html" class="back-home">Retour à l’accueil</a>
       </section>
@@ -147,18 +364,21 @@
 
 
 
-  <!-- FOOTER identique -->
+  <!-- ============ FOOTER ============ -->
   <footer>
     <div class="footer-inner">
 
-      <a href="https://www.facebook.com/profile.php?id=61582519354960" class="footer-icon">
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/profile.php?id=61582519354960&mibextid=wwXIfr" class="footer-icon">
         <img class="icon-facebook" src="facebook_noir.png" alt="Facebook">
       </a>
 
+      <!-- Instagram -->
       <a href="https://www.instagram.com/maisoncortez.fragrance/" class="footer-icon">
         <img class="icon-instagram" src="instagram_noir.png" alt="Instagram">
       </a>
 
+      <!-- Email -->
       <a href="mailto:info.maisoncortez@gmail.com" class="footer-icon">
         <img class="icon-mail" src="mail_noir.png" alt="Email">
       </a>
@@ -172,18 +392,24 @@
 
 
 
-  <!-- SCRIPT : affichage du recap -->
+  <!-- ============ SCRIPT : REMPLIR LE RÉCAP ============ -->
   <script>
     const recapContainer = document.getElementById("recap-container");
+    const recapDateEl = document.getElementById("recap-date");
+
     const raw = localStorage.getItem("mc_last_form");
 
     if (!raw) {
-      recapContainer.innerHTML = "<p>Aucune donnée trouvée.</p>";
+      recapContainer.innerHTML = "<p>Aucune donnée trouvée. Vous pouvez revenir au formulaire et le renvoyer.</p>";
     } else {
       const data = JSON.parse(raw);
 
+      // date d’envoi
+      if (data._date_envoi) {
+        recapDateEl.textContent = "Date d’envoi : " + data._date_envoi;
+      }
+
       const labels = {
-        _date_envoi: "Date d’envoi",
         nom: "Nom complet",
         email: "Adresse e-mail",
         date_naissance: "Date de naissance",
@@ -191,49 +417,94 @@
         adresse: "Adresse",
         origines: "Origines",
         profession: "Profession",
-        type_peau: "Type de peau",
         couleur_peau: "Couleur de peau",
+        type_peau: "Type de peau",
         ph_peau: "Type de peau (pH)",
         saison: "Saison préférée",
         moment: "Moments favoris",
-        mots_definissent: "Quelques mots sur vous",
-        pays_coeur: "Pays / Ville de cœur",
+        mots_definissent: "Quelques mots qui vous définissent",
+        pays_coeur: "Pays / ville de cœur",
         dernier_parfum: "Dernier parfum porté",
-        odeurs_enfance: "Odeurs d’enfance",
-        odeur_souvenir_heureux: "Souvenir heureux",
+        odeurs_enfance: "Odeurs d’enfance / adolescence",
+        odeur_souvenir_heureux: "Odeur liée à un souvenir heureux",
         odeur_personne_chere: "Odeur liée à une personne chère",
-        ingredient_famille: "Ingrédient familial / culturel",
-        saison_a_evoquer: "Saison à évoquer",
-        emotion_souhaitee: "Émotion souhaitée",
+        ingredient_famille: "Ingrédient / plante récurrent(e) dans votre famille ou culture",
+        saison_a_evoquer: "Saison ou période de vie à évoquer",
+        emotion_souhaitee: "Émotion souhaitée en portant le parfum",
         usage_parfum: "Usage du parfum",
-        occasion: "Occasions",
+        occasion: "Occasions particulières",
         aura: "Aura souhaitée",
-        famille_olfactive: "Famille olfactive",
-        odeurs_a_eviter: "Odeurs à éviter",
-        couleur_associee: "Couleur associée",
-        parfum_paysage: "Si le parfum était un paysage",
-        parfum_musique: "Si le parfum était un morceau de musique",
-        parfum_souvenir: "Si le parfum était un souvenir",
-        trois_mots: "Trois mots clés",
+        famille_olfactive: "Famille olfactive souhaitée",
+        odeurs_a_eviter: "Odeurs ou types de parfums à éviter",
+        couleur_associee: "Couleur associée au parfum",
+        parfum_paysage: "Si votre parfum était un paysage",
+        parfum_musique: "Si votre parfum était un morceau de musique",
+        parfum_souvenir: "Si votre parfum était un souvenir figé",
+        trois_mots: "Trois mots que vous voulez que les autres ressentent",
         idee_precise: "Idée précise du parfum",
-        matiere_premiere_souhaitee: "Matière première souhaitée",
-        "parfums_aimés": "Parfums déjà aimés",
-        nom_parfum: "Nom du parfum",
-        commentaire_final: "Commentaire final",
+        matiere_premiere_souhaitee: "Matière première / odeur à intégrer absolument",
+        "parfums_aimés": "Parfums que vous avez aimés",
+        nom_parfum: "Nom souhaité pour votre parfum personnalisé",
+        commentaire_final: "Informations ou précisions supplémentaires",
         format: "Format choisi"
       };
 
+      // groupes logiques pour un rendu élégant
+      const groups = [
+        {
+          title: "Profil de base",
+          keys: ["nom","email","date_naissance","genre","adresse","origines","profession"]
+        },
+        {
+          title: "Peau & environnement",
+          keys: ["couleur_peau","type_peau","ph_peau"]
+        },
+        {
+          title: "Univers personnel",
+          keys: ["saison","moment","mots_definissent","pays_coeur","dernier_parfum"]
+        },
+        {
+          title: "Ancrage émotionnel",
+          keys: ["odeurs_enfance","odeur_souvenir_heureux","odeur_personne_chere","ingredient_famille","saison_a_evoquer","emotion_souhaitee"]
+        },
+        {
+          title: "Intention du parfum",
+          keys: ["usage_parfum","occasion","aura","famille_olfactive","odeurs_a_eviter","couleur_associee"]
+        },
+        {
+          title: "Visualisation créative",
+          keys: ["parfum_paysage","parfum_musique","parfum_souvenir","trois_mots"]
+        },
+        {
+          title: "Derniers souhaits & format",
+          keys: ["idee_precise","matiere_premiere_souhaitee","parfums_aimés","nom_parfum","commentaire_final","format"]
+        }
+      ];
+
       let html = "";
 
-      Object.keys(labels).forEach(key => {
-        const value = data[key];
-        if (value && value.trim() !== "") {
-          html += `
-            <div class="recap-row">
-              <div class="recap-label">${labels[key]}</div>
-              <div class="recap-value">${value}</div>
-            </div>
-          `;
+      groups.forEach(group => {
+        let groupHasContent = false;
+        let groupHtml = `<div class="recap-group"><h3 class="recap-group-title">${group.title}</h3><div class="fields-grid full">`;
+
+        group.keys.forEach(key => {
+          const value = data[key];
+          if (value && String(value).trim() !== "") {
+            groupHasContent = true;
+            const label = labels[key] || key;
+            groupHtml += `
+              <div class="form-field">
+                <div class="recap-label">${label}</div>
+                <div class="recap-value">${value}</div>
+              </div>
+            `;
+          }
+        });
+
+        groupHtml += `</div></div>`;
+
+        if (groupHasContent) {
+          html += groupHtml;
         }
       });
 
@@ -243,25 +514,31 @@
 
 
 
-  <!-- Script Mode Jour/Nuit -->
+  <!-- ============ SCRIPT MODE JOUR / NUIT ============ -->
   <script>
     const modeBtn = document.getElementById("modeBtn");
 
-    modeBtn.onclick = () => {
+    modeBtn.addEventListener("click", () => {
       document.body.classList.toggle("light");
 
-      if (document.body.classList.contains("light")) {
-        modeBtn.textContent = "🌙 Nuit";
-        document.querySelectorAll(".icon-facebook")[0].src = "facebook_blanc.png";
-        document.querySelectorAll(".icon-instagram")[0].src = "instagram_blanc.png";
-        document.querySelectorAll(".icon-mail")[0].src = "mail_blanc.png";
+      const isLight = document.body.classList.contains("light");
+      modeBtn.textContent = isLight ? "🌙 Nuit" : "☀️ Jour";
+
+      // Icônes footer
+      const fb = document.querySelector(".icon-facebook");
+      const ig = document.querySelector(".icon-instagram");
+      const mail = document.querySelector(".icon-mail");
+
+      if (isLight) {
+        if (fb) fb.src = "facebook_blanc.png";
+        if (ig) ig.src = "instagram_blanc.png";
+        if (mail) mail.src = "mail_blanc.png";
       } else {
-        modeBtn.textContent = "☀️ Jour";
-        document.querySelectorAll(".icon-facebook")[0].src = "facebook_noir.png";
-        document.querySelectorAll(".icon-instagram")[0].src = "instagram_noir.png";
-        document.querySelectorAll(".icon-mail")[0].src = "mail_noir.png";
+        if (fb) fb.src = "facebook_noir.png";
+        if (ig) ig.src = "instagram_noir.png";
+        if (mail) mail.src = "mail_noir.png";
       }
-    };
+    });
   </script>
 
 </body>
