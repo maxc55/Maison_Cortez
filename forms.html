@@ -544,7 +544,7 @@
       </section>
 
       <!-- Form -->
-      <form>
+      <form id="questionnaire-cortez">
 
         <!-- PROFIL DE BASE -->
         <section class="form-section" aria-labelledby="profil-de-base">
@@ -1121,17 +1121,18 @@
           </div>
         </section>
 
-        <!-- SUBMIT (placeholder pour futur lien Google Forms / API) -->
+        <!-- SUBMIT réel -->
         <div class="submit-row">
-          <button type="button" class="btn-submit">
-            Enregistrer plus tard
+          <button type="submit" class="btn-submit">
+            Envoyer mon questionnaire
           </button>
         </div>
-        <p class="submit-note">
-          Ce bouton est décoratif pour l’instant. L’enregistrement réel sera connecté plus tard à Google Forms ou à une API.
+        <p id="form-message" class="submit-note">
+          <!-- Message d’état (succès / erreur) -->
         </p>
 
       </form>
+
     </div>
   </main>
 
@@ -1161,6 +1162,59 @@
   </div>
 </footer>
 
+<script>
+  // URL de ton script Google Apps Script
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAQtM739JQsdv9K0jh35Qw6R63tMWyHoGLb0KzNkKSeee0WXJLgh8_oGsOSQdzHBwE3A/exec"; // ⚠️ à remplacer
+
+  const form = document.getElementById("questionnaire-cortez");
+  const messageEl = document.getElementById("form-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // empêcher le rechargement de page
+
+    // Récupère toutes les valeurs du formulaire
+    const formData = new FormData(form);
+    const data = {};
+
+    // Pour chaque champ : si plusieurs valeurs (checkbox), on les concatène
+    formData.forEach((value, key) => {
+      if (data[key]) {
+        data[key] += ", " + value; // plusieurs valeurs pour le même name
+      } else {
+        data[key] = value;
+      }
+    });
+
+    // Message d'attente
+    messageEl.textContent = "Envoi en cours...";
+    messageEl.style.color = "var(--text-muted)";
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      // On ne peut pas lire la réponse à cause de no-cors,
+      // donc on affiche un message optimiste
+      messageEl.textContent = "Merci, votre questionnaire a bien été envoyé.";
+      messageEl.style.color = "var(--accent)";
+      form.reset();
+
+      // Optionnel : remonter en haut du formulaire
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    } catch (err) {
+      console.error(err);
+      messageEl.textContent = "Une erreur est survenue. Vous pouvez réessayer ou me contacter par e-mail.";
+      messageEl.style.color = "#e47070";
+    }
+  });
+</script>
 
   <script>
     const modeBtn = document.getElementById("modeBtn");
