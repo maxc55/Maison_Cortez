@@ -2,75 +2,59 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Maison Cortez — Récapitulatif de votre commande</title>
+  <title>Maison Cortez — Récapitulatif</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Polices + style global -->
+  <!-- Polices & style général -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .recap-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2.4rem 1.5rem 3rem;
-    }
-
-    .recap-card {
+    .recap-content {
       background: var(--card);
-      border-radius: 24px;
-      padding: 2rem 1.8rem;
+      border-radius: 26px;
+      padding: 2rem 1.6rem;
       border: 1px solid var(--border-soft);
       box-shadow:
-        0 12px 32px rgba(0,0,0,0.9),
+        0 18px 45px rgba(0,0,0,0.85),
         0 0 0 1px rgba(0,0,0,0.7);
     }
 
-    body.light .recap-card {
+    body.light .recap-content {
       background: var(--bg-soft);
       box-shadow:
-        0 10px 26px rgba(0,0,0,0.07),
+        0 12px 30px rgba(0,0,0,0.12),
         0 0 0 1px rgba(0,0,0,0.04);
     }
 
     .recap-title {
       font-family: "Playfair Display", serif;
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       margin-bottom: 0.4rem;
     }
 
     .recap-subtitle {
-      font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.6rem;
     }
 
     .recap-section-title {
-      margin-top: 1.4rem;
-      font-weight: 700;
+      margin-top: 1.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 0.85rem;
-      color: var(--accent);
-    }
-
-    .recap-list {
-      margin-top: 0.6rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.4rem 1.2rem;
+      letter-spacing: 0.14em;
       font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .recap-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
+      margin-top: 0.7rem;
     }
 
     .recap-label {
       font-weight: 600;
       color: var(--text);
+      margin-bottom: 0.15rem;
     }
 
     .recap-value {
@@ -78,44 +62,37 @@
       white-space: pre-wrap;
     }
 
-    .recap-footer-note {
-      margin-top: 1.8rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .back-link {
+    .back-home {
       display: inline-block;
-      margin-top: 1.2rem;
-      font-size: 0.85rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
       border-bottom: 1px solid var(--accent);
-      padding-bottom: 0.1rem;
+      padding-bottom: 0.2rem;
     }
   </style>
 </head>
+
 <body>
 
-  <!-- HEADER identique -->
+  <!-- HEADER (inchangé, même que les autres pages) -->
   <header>
     <div class="header-inner">
 
-      <!-- Gauche : logo cliquable -->
+      <!-- Logo gauche -->
       <div class="header-left">
         <a href="index.html" class="header-link">
           <div class="logo" aria-hidden="true"></div>
         </a>
       </div>
 
-      <!-- Centre : Maison Cortez cliquable -->
+      <!-- Centre -->
       <div class="header-center">
-        <a href="index.html" class="header-link brand-name">
-          Maison Cortez
-        </a>
+        <a href="index.html" class="header-link brand-name">Maison Cortez</a>
       </div>
 
-      <!-- Droite : bouton mode -->
+      <!-- Mode jour/nuit -->
       <div class="header-right">
         <button id="modeBtn" type="button">☀️ Jour</button>
       </div>
@@ -125,154 +102,115 @@
 
   <!-- MAIN -->
   <main>
-    <div class="recap-wrap">
-      <section class="recap-card">
-        <h1 class="recap-title">Merci pour votre confiance.</h1>
-        <p class="recap-subtitle" id="recap-intro">
-          Nous avons bien reçu votre questionnaire. Voici un récapitulatif des informations transmises.
+    <div class="page-wrap">
+
+      <div class="recap-content">
+
+        <h1 class="recap-title">Merci pour votre commande</h1>
+        <p class="recap-subtitle" id="intro-text">
+          Voici un récapitulatif officiel de votre questionnaire Maison Cortez.
         </p>
 
-        <div id="recap-container">
-          <!-- Le récapitulatif sera injecté ici en JavaScript -->
-        </div>
+        <div id="recap-container"></div>
 
-        <p class="recap-footer-note">
-          Vous recevrez un e-mail lorsque votre création olfactive aura été analysée et préparée.
-          N’hésitez pas à vérifier votre dossier “courriers indésirables / spams”.
-        </p>
+        <a href="index.html" class="back-home">Retour à l’accueil</a>
 
-        <a href="index.html" class="back-link">Retour à l’accueil</a>
-      </section>
+      </div>
+
     </div>
   </main>
 
-  <!-- FOOTER identique -->
+  <!-- FOOTER (identique au reste du site) -->
   <footer>
     <div class="footer-inner">
-      <a href="https://www.facebook.com/profile.php?id=61582519354960&mibextid=wwXIfr&rdid=sb3MgrSocv0ZsKba&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16Vw4sa9Ad%2F%3Fmibextid%3DwwXIfr#" class="footer-icon">
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/profile.php?id=61582519354960" class="footer-icon">
         <img class="icon-facebook" src="facebook_noir.png" alt="Facebook">
       </a>
+
+      <!-- Instagram -->
       <a href="https://www.instagram.com/maisoncortez.fragrance/" class="footer-icon">
         <img class="icon-instagram" src="instagram_noir.png" alt="Instagram">
       </a>
+
+      <!-- Email -->
       <a href="mailto:info.maisoncortez@gmail.com" class="footer-icon">
         <img class="icon-mail" src="mail_noir.png" alt="Email">
       </a>
+
     </div>
+
     <div class="footer-copy">
       © Maison Cortez – Tous droits réservés
     </div>
   </footer>
 
-  <!-- Script : affichage du récap à partir du localStorage -->
+  <!-- SCRIPT : charger les réponses -->
   <script>
     const recapContainer = document.getElementById("recap-container");
-    const recapIntro = document.getElementById("recap-intro");
+    const introText = document.getElementById("intro-text");
+
     const raw = localStorage.getItem("mc_last_form");
 
     if (!raw) {
-      recapIntro.textContent = "Aucune commande récente n’a été trouvée sur cet appareil.";
-      recapContainer.textContent = "";
+      introText.textContent = "Aucune donnée récente trouvée.";
+      recapContainer.innerHTML = "";
     } else {
       const data = JSON.parse(raw);
 
       const labels = {
-        _date_envoi: "Date de l’envoi",
-        nom: "Prénom + Nom",
+        _date_envoi: "Date d’envoi",
+        nom: "Nom",
         email: "Adresse e-mail",
         date_naissance: "Date de naissance",
         genre: "Genre",
-        adresse: "Adresse de résidence actuelle",
-        origines: "Origines culturelles et/ou géographiques",
+        adresse: "Adresse",
+        origines: "Origines",
         profession: "Profession",
         type_peau: "Type de peau",
         couleur_peau: "Couleur de peau",
         ph_peau: "Type de peau (pH)",
         saison: "Saison préférée",
-        moment: "Moments de la journée préférés",
-        mots_definissent: "Quelques mots qui vous définissent",
-        pays_coeur: "Pays / ville de cœur",
+        moment: "Moments favoris",
+        mots_definissent: "Quelques mots sur vous",
+        pays_coeur: "Pays / Ville de cœur",
         dernier_parfum: "Dernier parfum porté",
-        odeurs_enfance: "Odeurs d’enfance ou d’adolescence",
-        odeur_souvenir_heureux: "Odeur liée à un souvenir heureux",
-        odeur_personne_chere: "Odeur liée à une personne chère",
-        ingredient_famille: "Plante/fleur/ingrédient récurrent dans votre famille ou culture",
-        saison_a_evoquer: "Saison ou période de vie à évoquer",
-        emotion_souhaitee: "Émotion souhaitée en portant votre parfum",
+        odeurs_enfance: "Odeurs d’enfance",
+        odeur_souvenir_heureux: "Souvenir heureux",
+        odeur_personne_chere: "Personne chère",
+        ingredient_famille: "Ingrédient familial",
+        saison_a_evoquer: "Saison à évoquer",
+        emotion_souhaitee: "Émotion souhaitée",
         usage_parfum: "Usage du parfum",
-        occasion: "Occasions liées à la création de ce parfum",
+        occasion: "Occasion",
         aura: "Aura souhaitée",
-        famille_olfactive: "Famille olfactive souhaitée",
-        odeurs_a_eviter: "Odeurs / familles à éviter",
-        couleur_associee: "Couleur associée au parfum imaginé",
-        parfum_paysage: "Si votre parfum était un paysage…",
-        parfum_musique: "Si votre parfum était un morceau de musique…",
-        parfum_souvenir: "Si votre parfum était un souvenir figé…",
-        trois_mots: "Trois mots que vous voulez que les autres ressentent",
-        idee_precise: "Idée précise du parfum imaginé",
-        matiere_premiere_souhaitee: "Matière première / odeur à intégrer absolument",
-        "parfums_aimés": "Parfums déjà portés ou aimés",
-        nom_parfum: "Nom de votre parfum personnalisé",
-        commentaire_final: "Autres précisions / message final",
+        famille_olfactive: "Famille olfactive",
+        odeurs_a_eviter: "Odeurs à éviter",
+        couleur_associee: "Couleur associée",
+        parfum_paysage: "Parfum = paysage",
+        parfum_musique: "Parfum = musique",
+        parfum_souvenir: "Parfum = souvenir",
+        trois_mots: "Trois mots clés",
+        idee_precise: "Idée précise",
+        matiere_premiere_souhaitee: "Matière première souhaitée",
+        "parfums_aimés": "Parfums aimés",
+        nom_parfum: "Nom du parfum",
+        commentaire_final: "Message final",
         format: "Format choisi"
       };
 
-      const sections = [
-        {
-          title: "Informations générales",
-          keys: ["_date_envoi", "nom", "email", "date_naissance", "genre", "adresse", "pays_coeur"]
-        },
-        {
-          title: "Peau & environnement",
-          keys: ["type_peau", "couleur_peau", "ph_peau"]
-        },
-        {
-          title: "Univers personnel",
-          keys: ["origines", "profession", "saison", "moment", "mots_definissent", "dernier_parfum"]
-        },
-        {
-          title: "Ancrage émotionnel",
-          keys: ["odeurs_enfance", "odeur_souvenir_heureux", "odeur_personne_chere", "ingredient_famille", "saison_a_evoquer", "emotion_souhaitee"]
-        },
-        {
-          title: "Intention & style du parfum",
-          keys: ["usage_parfum", "occasion", "aura", "famille_olfactive", "odeurs_a_eviter", "couleur_associee", "format"]
-        },
-        {
-          title: "Visualisation créative",
-          keys: ["parfum_paysage", "parfum_musique", "parfum_souvenir", "trois_mots"]
-        },
-        {
-          title: "Derniers souhaits",
-          keys: ["idee_precise", "matiere_premiere_souhaitee", "parfums_aimés", "nom_parfum", "commentaire_final"]
-        }
-      ];
-
       let html = "";
 
-      sections.forEach(section => {
-        let anyValue = false;
-        let block = `<h2 class="recap-section-title">${section.title}</h2><div class="recap-list">`;
-
-        section.keys.forEach(key => {
-          let rawKey = key;
-          let value = data[rawKey] || data[rawKey + "[]"];
-
-          if (value && String(value).trim() !== "") {
-            anyValue = true;
-            block += `
-              <div class="recap-row">
-                <div class="recap-label">${labels[rawKey] || rawKey}</div>
-                <div class="recap-value">${value}</div>
-              </div>
-            `;
-          }
-        });
-
-        block += `</div>`;
-
-        if (anyValue) {
-          html += block;
+      Object.keys(labels).forEach(key => {
+        const value = data[key] || "";
+        if (value.trim() !== "") {
+          html += `
+            <div class="recap-row">
+              <div class="recap-label">${labels[key]}</div>
+              <div class="recap-value">${value}</div>
+            </div>
+          `;
         }
       });
 
@@ -280,7 +218,7 @@
     }
   </script>
 
-  <!-- Script Jour / Nuit -->
+  <!-- Script : mode jour/nuit -->
   <script>
     const modeBtn = document.getElementById("modeBtn");
 
