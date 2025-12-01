@@ -1164,7 +1164,7 @@
 
 <script>
   // URL de ton script Google Apps Script
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAQtM739JQsdv9K0jh35Qw6R63tMWyHoGLb0KzNkKSeee0WXJLgh8_oGsOSQdzHBwE3A/exec"; // ⚠️ à remplacer
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyAQtM739JQsdv9K0jh35Qw6R63tMWyHoGLb0KzNkKSeee0WXJLgh8_oGsOSQdzHBwE3A/exec";
 
   const form = document.getElementById("questionnaire-cortez");
   const messageEl = document.getElementById("form-message");
@@ -1185,11 +1185,15 @@
       }
     });
 
-    // Message d'attente
+    // On ajoute une date locale d'envoi pour le récap
+    data._date_envoi = new Date().toLocaleString("fr-FR");
+
+    // Message d'attente (au cas où ça prend un peu de temps)
     messageEl.textContent = "Envoi en cours...";
     messageEl.style.color = "var(--text-muted)";
 
     try {
+      // Envoi vers Google Sheets
       await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -1199,14 +1203,11 @@
         body: JSON.stringify(data)
       });
 
-      // On ne peut pas lire la réponse à cause de no-cors,
-      // donc on affiche un message optimiste
-      messageEl.textContent = "Merci, votre questionnaire a bien été envoyé.";
-      messageEl.style.color = "var(--accent)";
-      form.reset();
+      // On stocke les réponses localement pour le récap
+      localStorage.setItem("mc_last_form", JSON.stringify(data));
 
-      // Optionnel : remonter en haut du formulaire
-      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Redirection vers la page de récap
+      window.location.href = "recap.html";
 
     } catch (err) {
       console.error(err);
@@ -1215,6 +1216,7 @@
     }
   });
 </script>
+
 
   <script>
     const modeBtn = document.getElementById("modeBtn");
