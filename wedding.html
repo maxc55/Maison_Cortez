@@ -468,6 +468,50 @@
         0 0 0 1px rgba(0,0,0,0.1);
     }
 
+
+
+
+        /* Calendly intégré */
+
+    .calendly-card {
+      margin-top: 1rem;
+      min-width: 320px;
+      height: 700px;
+      border-radius: 22px;
+      overflow: hidden;          /* coupe les coins de l'iframe */
+      background: var(--bg-soft);
+      box-shadow:
+        0 14px 32px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    body.light .calendly-card {
+      box-shadow:
+        0 14px 28px rgba(0,0,0,0.16),
+        0 0 0 1px rgba(0,0,0,0.05);
+    }
+    /* Conteneur propre pour le widget */
+    .calendly-widget-container {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    /* Style appliqué directement au widget Calendly */
+    .calendly-clean {
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow:
+        0 16px 40px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(0,0,0,0.7);
+    }
+
+    /* Mode jour */
+    body.light .calendly-clean {
+      box-shadow:
+        0 12px 32px rgba(0,0,0,0.12),
+        0 0 0 1px rgba(0,0,0,0.05);
+    }
+
     /* FOOTER */
 
     footer {
@@ -595,121 +639,64 @@
         </div>
       </section>
 
-      <!-- SECTION CONSULTATION + CALENDRIER -->
-      <section class="section-row">
+     <section class="section-row">
 
-        <!-- TEXTE CONSULTATION -->
-        <div class="section-box">
-          <h2 class="section-title">Formules de consultation</h2>
-          <div class="section-text">
-            <p>
-              Vous pouvez choisir la formule qui vous convient le mieux :
-            </p>
-          </div>
-
-          <div class="consult-options">
-            <div class="consult-card">
-              <div class="consult-title">💻 Consultation à distance (Facetime ou visio)</div>
-              <div class="consult-price">10&nbsp;€</div>
-              <p class="consult-text">
-                Une rencontre d’environ 30 à 45 minutes pour définir ensemble les bases de votre création.
-                À l’issue de cette consultation, vous recevrez le questionnaire personnalisé à compléter à votre rythme,
-                seul·e ou à deux.
-              </p>
-            </div>
-
-            <div class="consult-card">
-              <div class="consult-title">🏠 Consultation en personne (à domicile)</div>
-              <div class="consult-price">à partir de 50&nbsp;€</div>
-              <p class="consult-text">
-                Une expérience plus intime et immersive, directement chez vous (région de Bruxelles).
-                Nous prendrons le temps de découvrir votre univers, vos goûts et vos émotions autour de la création de votre parfum.
-                <br /><br />
-                <em>Un léger supplément peut s’appliquer selon la distance.</em>
-              </p>
-            </div>
-          </div>
-
-          <p class="highlight-line">
-            💌 Pour une demande spécifique (destination, grand nombre d’invités, etc.),
-            vous pouvez me contacter directement par e-mail&nbsp;: <strong>contact.maisoncortez@gmail.com</strong>.
-          </p>
-        </div>
-
-        <!-- CALENDRIER -->
-        <div class="section-box">
-          <div class="calendar-header">
-            <div class="calendar-title">Disponibilités</div>
-            <div class="calendar-month">
-              <button class="calendar-nav-btn" type="button" aria-label="Mois précédent">‹</button>
-              <span id="calendar-month-label">nov. 2025</span>
-              <button class="calendar-nav-btn" type="button" aria-label="Mois suivant">›</button>
-            </div>
-          </div>
-
-          <div class="calendar-grid">
-            <div class="calendar-weekdays">
-              <span>dim.</span><span>lun.</span><span>mar.</span><span>mer.</span><span>jeu.</span><span>ven.</span><span>sam.</span>
-            </div>
-
-            <!-- Petit calendrier statique d'exemple -->
-            <div class="calendar-days" id="calendar-days">
-              <!-- Cases vides pour aligner le 1er du mois (ex : commence vendredi) -->
-              <button class="calendar-day empty" disabled></button>
-              <button class="calendar-day empty" disabled></button>
-              <button class="calendar-day empty" disabled></button>
-              <button class="calendar-day empty" disabled></button>
-              <button class="calendar-day">1</button>
-              <button class="calendar-day">2</button>
-              <button class="calendar-day">3</button>
-
-              <button class="calendar-day">4</button>
-              <button class="calendar-day">5</button>
-              <button class="calendar-day">6</button>
-              <button class="calendar-day">7</button>
-              <button class="calendar-day">8</button>
-              <button class="calendar-day">9</button>
-              <button class="calendar-day">10</button>
-
-              <button class="calendar-day">11</button>
-              <button class="calendar-day">12</button>
-              <button class="calendar-day">13</button>
-              <button class="calendar-day">14</button>
-              <button class="calendar-day">15</button>
-              <button class="calendar-day">16</button>
-              <button class="calendar-day">17</button>
-
-              <button class="calendar-day">18</button>
-              <button class="calendar-day">19</button>
-              <button class="calendar-day">20</button>
-              <button class="calendar-day">21</button>
-              <button class="calendar-day">22</button>
-              <button class="calendar-day">23</button>
-              <button class="calendar-day">24</button>
-
-              <button class="calendar-day">25</button>
-              <button class="calendar-day">26</button>
-              <button class="calendar-day">27</button>
-              <button class="calendar-day">28</button>
-              <button class="calendar-day">29</button>
-              <button class="calendar-day">30</button>
-              <button class="calendar-day empty" disabled></button>
-            </div>
-          </div>
-
-          <div class="calendar-footer">
-            <div>• Cliquez sur une date disponible pour la pré-sélectionner.</div>
-            <div>• La confirmation réelle du rendez-vous se fera ensuite par e-mail ou via l’API de réservation.</div>
-          </div>
-
-          <button class="btn-reserver" type="button">
-            Réserver avec moi
-          </button>
-        </div>
-      </section>
+  <!-- TEXTE CONSULTATION -->
+  <div class="section-box">
+    <h2 class="section-title">Formules de consultation</h2>
+    <div class="section-text">
+      <p>
+        Vous pouvez choisir la formule qui vous convient le mieux :
+      </p>
     </div>
+
+    <div class="consult-options">
+      <div class="consult-card">
+        <div class="consult-title">💻 Consultation à distance (Facetime ou visio)</div>
+        <div class="consult-price">10&nbsp;€</div>
+        <p class="consult-text">
+          Une rencontre d’environ 30 à 45 minutes pour définir ensemble les bases de votre création.
+          À l’issue de cette consultation, vous recevrez le questionnaire personnalisé à compléter à votre rythme,
+          seul·e ou à deux.
+        </p>
+      </div>
+
+      <div class="consult-card">
+        <div class="consult-title">🏠 Consultation en personne (à domicile)</div>
+        <div class="consult-price">à partir de 50&nbsp;€</div>
+        <p class="consult-text">
+          Une expérience plus intime et immersive, directement chez vous (région de Bruxelles).
+          Nous prendrons le temps de découvrir votre univers, vos goûts et vos émotions autour de la création de votre parfum.
+          <br /><br />
+          <em>Un léger supplément peut s’appliquer selon la distance.</em>
+        </p>
+      </div>
+    </div>
+
+    <p class="highlight-line">
+      💌 Pour une demande spécifique, contactez : <strong>contact.maisoncortez@gmail.com</strong>.
+    </p>
+  </div>
+
+  <!-- WIDGET DIRECTEMENT SANS SECTION-BOX -->
+  <div class="calendly-widget-container">
+    <div
+      class="calendly-inline-widget calendly-clean"
+      data-url="https://calendly.com/tkyo566/30min?background_color=181211&text_color=f5f5f5&primary_color=d4af37"
+      style="min-width:320px;height:700px;"
+    ></div>
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </div>
+
+</section>
+
   </main>
 
+
+
+
+
+  
   <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -737,26 +724,6 @@
 </footer>
 
 
-  <script>
 
-    // Sélection de jour dans le calendrier (front-end uniquement)
-    const daysContainer = document.getElementById("calendar-days");
-    let selectedDay = null;
-
-    daysContainer.addEventListener("click", (e) => {
-      const target = e.target;
-      if (!target.classList.contains("calendar-day") || target.classList.contains("empty")) {
-        return;
-      }
-      if (selectedDay) {
-        selectedDay.classList.remove("selected");
-      }
-      selectedDay = target;
-      selectedDay.classList.add("selected");
-
-      // Plus tard, tu pourras ici envoyer la date sélectionnée à une API / formulaire.
-      console.log("Date sélectionnée :", selectedDay.textContent);
-    });
-  </script>
 </body>
 </html>
