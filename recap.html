@@ -322,6 +322,54 @@
     </div>
   </header>
 
+<script>
+  (function () {
+    const body = document.body;
+    const modeBtn = document.getElementById("modeBtn");
+
+    function applyTheme(theme) {
+      const isLight = theme === "light";
+
+      if (isLight) {
+        body.classList.add("light");
+      } else {
+        body.classList.remove("light");
+      }
+
+      if (modeBtn) {
+        modeBtn.textContent = isLight ? "🌙 Nuit" : "☀️ Jour";
+      }
+
+      // Mise à jour des icônes du footer
+      const fb = document.querySelector(".icon-facebook");
+      const ig = document.querySelector(".icon-instagram");
+      const mail = document.querySelector(".icon-mail");
+
+      if (fb) fb.src = isLight ? "facebook_blanc.png" : "facebook_noir.png";
+      if (ig) ig.src = isLight ? "instagram_blanc.png" : "instagram_noir.png";
+      if (mail) mail.src = isLight ? "mail_blanc.png" : "mail_noir.png";
+    }
+
+    // 1. On lit le thème sauvegardé dans localStorage
+    const savedTheme = localStorage.getItem("mc_theme");
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+      applyTheme(savedTheme);
+    } else {
+      // Thème par défaut : nuit
+      applyTheme("dark");
+    }
+
+    // 2. On écoute le clic sur le bouton
+    if (modeBtn) {
+      modeBtn.addEventListener("click", () => {
+        const newTheme = body.classList.contains("light") ? "dark" : "light";
+        localStorage.setItem("mc_theme", newTheme);
+        applyTheme(newTheme);
+      });
+    }
+  })();
+</script>
 
 
   <!-- ============ MAIN ============ -->
@@ -515,31 +563,7 @@
 
 
   <!-- ============ SCRIPT MODE JOUR / NUIT ============ -->
-  <script>
-    const modeBtn = document.getElementById("modeBtn");
 
-    modeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("light");
-
-      const isLight = document.body.classList.contains("light");
-      modeBtn.textContent = isLight ? "🌙 Nuit" : "☀️ Jour";
-
-      // Icônes footer
-      const fb = document.querySelector(".icon-facebook");
-      const ig = document.querySelector(".icon-instagram");
-      const mail = document.querySelector(".icon-mail");
-
-      if (isLight) {
-        if (fb) fb.src = "facebook_blanc.png";
-        if (ig) ig.src = "instagram_blanc.png";
-        if (mail) mail.src = "mail_blanc.png";
-      } else {
-        if (fb) fb.src = "facebook_noir.png";
-        if (ig) ig.src = "instagram_noir.png";
-        if (mail) mail.src = "mail_noir.png";
-      }
-    });
-  </script>
 
 </body>
 </html>
